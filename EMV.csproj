@@ -52,7 +52,9 @@
   <ItemGroup>
     <PackageReference Include="AutoCompleteTextBox" Version="1.2.0" />
     <PackageReference Include="log4net" Version="2.0.12" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.2.236301">
       <PrivateAssets>all</PrivateAssets>
