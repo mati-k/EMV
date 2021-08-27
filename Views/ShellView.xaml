@@ -7,6 +7,12 @@
         xmlns:models="clr-namespace:EMV.Models"
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
+xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+Background="{DynamicResource MaterialDesignPaper}"
+TextElement.FontWeight="Medium"
+TextElement.FontSize="14"
+FontFamily="{materialDesign:MaterialDesignFont}"
         Title="EU4 Mission Tool" Height="450" Width="1200">
     <Window.CommandBindings>
         <CommandBinding Command="Save" Executed="SaveCommand" />

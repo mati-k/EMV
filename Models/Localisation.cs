@@ -44,19 +44,5 @@ namespace EMV.Models
 
             return localisation;
         }
-
-        public static void Write(StreamWriter writer, MissionFileModel missionFile)
-        {
-            writer.WriteLine("l_english:");
-            foreach (MissionBranchModel branch in missionFile.Branches)
-            {
-                foreach (MissionModel mission in branch.Missions)
-                {
-                    writer.WriteLine(" {0}_title:0 \"{1}\"", mission.Name, mission.Title);
-                    writer.WriteLine(" {0}_desc:0 \"{1}\"", mission.Name, mission.Description);
-                    writer.WriteLine();
-                }
-            }
-        }
     }
 }

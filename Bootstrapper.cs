@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using EMV.Models;
 using EMV.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -53,10 +54,13 @@ namespace EMV
             _container.Singleton<MissionTreeViewModel>();
             _container.Singleton<MissionDetailsViewModel>();
             _container.Singleton<BranchDetailsViewModel>();
+            _container.Singleton<MenuViewModel>();
 
             _container.Singleton<GfxDialogViewModel>();
 
             _container.PerRequest<MessageDialogViewModel>();
+
+            _container.Singleton<IModData, ModData>();
         }
     }
 }

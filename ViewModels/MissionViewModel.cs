@@ -22,6 +22,7 @@ namespace EMV.ViewModels
         private MissionDetailsViewModel _missionDetailsViewModel;
         private BranchDetailsViewModel _branchDetailsViewModel;
         private Screen _selectedDetailsVM;
+        private IModData _mod;
 
         public IDropTarget DropHandler { get; } = new DropTargetHandler();
 
@@ -55,10 +56,22 @@ namespace EMV.ViewModels
             }
         }
 
-        public MissionViewModel(IEventAggregator eventAggregator, MissionTreeViewModel missionTreeViewModel, MissionDetailsViewModel missionDetailsViewModel, BranchDetailsViewModel branchDetailsViewModel)
+        public IModData Mod
+        {
+            get { return _mod; }
+            set
+            {
+                _mod = value;
+                NotifyOfPropertyChange(() => Mod);
+            }
+        }
+
+        public MissionViewModel(IEventAggregator eventAggregator, MissionTreeViewModel missionTreeViewModel, MissionDetailsViewModel missionDetailsViewModel, BranchDetailsViewModel branchDetailsViewModel, IModData mod)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.SubscribeOnPublishedThread(this);
+
+            _mod = mod;
 
             MissionTreeVM = missionTreeViewModel;
             _missionDetailsViewModel = missionDetailsViewModel;

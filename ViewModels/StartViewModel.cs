@@ -35,53 +35,6 @@ namespace EMV.ViewModels
             FilesModel = EMV.Models.FilesModel.ReadFromJson();
         }
 
-        public void SelectMissionFile()
-        {
-            string selected = SelectFile("txt File", ".txt", "missions");
-            if (!string.IsNullOrWhiteSpace(selected))
-                FilesModel.MissionFile = selected;
-        }
-        public void CreateMissionFile()
-        {
-            CommonSaveFileDialog save = new CommonSaveFileDialog();
-            save.Filters.Add(new CommonFileDialogFilter("txt", ".txt"));
-            save.DefaultExtension = ".txt";
-            save.AlwaysAppendDefaultExtension = true;
-
-            if (!string.IsNullOrWhiteSpace(FilesModel.ModFolder))
-                save.InitialDirectory = Path.Combine(FilesModel.ModFolder, "missions");
-
-            if (save.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                File.Create(save.FileName);
-                FilesModel.MissionFile = save.FileName;
-            }
-        }
-
-        public void SelectLocalisationFile()
-        {
-            string selected = SelectFile("yml File", ".yml", "localisation");
-            if (!string.IsNullOrWhiteSpace(selected))
-                FilesModel.LocalisationFile = selected;
-        }
-
-        public void CreateLocalisationFile()
-        {
-            CommonSaveFileDialog save = new CommonSaveFileDialog();
-            save.Filters.Add(new CommonFileDialogFilter("yml", ".yml"));
-            save.DefaultExtension = ".yml";
-            save.AlwaysAppendDefaultExtension = true;
-
-            if (!string.IsNullOrWhiteSpace(FilesModel.ModFolder))
-                save.InitialDirectory = Path.Combine(FilesModel.ModFolder, "localisation");
-
-            if (save.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                File.Create(save.FileName);
-                FilesModel.LocalisationFile = save.FileName;
-            }
-        }
-
         public void SelectVanillaFolder()
         {
             string selected = SelectFolder();
@@ -127,30 +80,9 @@ namespace EMV.ViewModels
             return "";
         }
 
-        public void AddValue(GroupNodeModel node)
+        public bool CanContinue(string filesModel_VanillaFolder, string filesModel_ModFolder)
         {
-            node.Nodes.Add(new ValueNodeModel() { Parent = node }); ;
-        }
-
-        public void AddGroup(GroupNodeModel node)
-        {
-            node.Nodes.Add(new GroupNodeModel() { Parent = node });
-        }
-
-        public void RemoveValue(ValueNodeModel node)
-        {
-            node.Parent.Nodes.Remove(node);
-        }
-
-        public void RemoveGroup(GroupNodeModel node)
-        {
-            node.Parent.Nodes.Remove(node);
-        }
-
-        public bool CanContinue(string filesModel_MissionFile, string filesModel_LocalisationFile, string filesModel_VanillaFolder, string filesModel_ModFolder)
-        {
-            return !String.IsNullOrWhiteSpace(filesModel_MissionFile) && !String.IsNullOrWhiteSpace(filesModel_LocalisationFile)
-                && !String.IsNullOrWhiteSpace(filesModel_VanillaFolder) && !String.IsNullOrWhiteSpace(filesModel_ModFolder);
+            return !String.IsNullOrWhiteSpace(filesModel_VanillaFolder) && !String.IsNullOrWhiteSpace(filesModel_ModFolder);
         }
 
         public void Continue(string filesModel_MissionFile, string filesModel_LocalisationFile, string filesModel_VanillaFolder, string filesModel_ModFolder)

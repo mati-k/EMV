@@ -17,32 +17,8 @@ namespace EMV.Models
     {
         private const string pathsFile = "paths.json";
 
-        private string _missionFile;
-        private string _localisationFile;
         private string _vanillaFolder;
         private string _modFolder;
-
-        [DataMember]
-        public string MissionFile
-        {
-            get { return _missionFile; }
-            set
-            {
-                _missionFile = value;
-                NotifyOfPropertyChange(() => MissionFile);
-            }
-        }
-
-        [DataMember]
-        public string LocalisationFile
-        {
-            get { return _localisationFile; }
-            set
-            {
-                _localisationFile = value;
-                NotifyOfPropertyChange(() => LocalisationFile);
-            }
-        }
 
         [DataMember]
         public string VanillaFolder
@@ -71,10 +47,8 @@ namespace EMV.Models
 
         }
 
-        public FilesModel(string missionFile, string localizationFile, string vanillaFolder, string modFolder)
+        public FilesModel(string vanillaFolder, string modFolder)
         {
-            this.MissionFile = missionFile;
-            this.LocalisationFile = localizationFile;
             this.VanillaFolder = vanillaFolder;
             this.ModFolder = modFolder;
         }

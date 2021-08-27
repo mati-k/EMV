@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EMV.Models
 {
-    public class MissionFileModel : PropertyChangedBase, IParadoxRead, IParadoxWrite
+    public class MissionFileModel : PropertyChangedBase, IParadoxRead
     {
         public string FileName { get; set; }
         public BindableCollection<MissionBranchModel> Branches { get; set; } = new BindableCollection<MissionBranchModel>();
@@ -17,19 +17,6 @@ namespace EMV.Models
         public void TokenCallback(ParadoxParser parser, string token)
         {
             Branches.Add(parser.Parse(new MissionBranchModel(this) { Name = token }));
-        }
-
-        public void Write(ParadoxStreamWriter writer)
-        {
-            foreach (MissionBranchModel branch in Branches)
-            {
-                if (String.IsNullOrWhiteSpace(branch.Name))
-                    throw new BranchNameException();
-
-                writer.WriteLine(branch.Name + " = {");
-                branch.Write(writer);
-                writer.WriteLine("}");
-            }
         }
     }
 }
