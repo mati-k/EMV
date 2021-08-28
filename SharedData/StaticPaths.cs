@@ -30,5 +30,27 @@ namespace EMV.SharedData
                 NotifyOfPropertyChange(() => MissionFramePath);
             }
         }
+
+        private string _missionRewardPath;
+        public string MissionRewardPath
+        {
+            get { return _missionRewardPath; }
+            set
+            {
+                _missionRewardPath = value;
+                NotifyOfPropertyChange(() => MissionRewardPath);
+            }
+        }
+
+        private string _missionConditionPath;
+        public string MissionConditionPath
+        {
+            get { return _missionConditionPath; }
+            set
+            {
+                _missionConditionPath = value;
+                NotifyOfPropertyChange(() => MissionConditionPath);
+            }
+        }
     }
 }
