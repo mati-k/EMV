@@ -54,10 +54,7 @@ namespace EMV
             _container.Singleton<MissionViewModel>();
             _container.Singleton<MissionTreeViewModel>();
             _container.Singleton<MissionDetailsViewModel>();
-            _container.Singleton<BranchDetailsViewModel>();
             _container.Singleton<MenuViewModel>();
-
-            _container.Singleton<GfxDialogViewModel>();
 
             _container.PerRequest<MessageDialogViewModel>();
 

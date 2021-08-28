@@ -14,24 +14,22 @@ using EMV.Models.Files;
 
 namespace EMV.ViewModels
 {
-    public class MissionDetailsViewModel : Screen, IHandle<MissionFileModel>, IHandle<MissionModel>
+    public class MissionDetailsViewModel : Screen, IHandle<MissionFileModel>
     {
         private IEventAggregator _eventAggregator;
         private IWindowManager _windowManager;
 
-        private MissionModel _mission;
+        private MissionFileModel _missionFile;
 
-        public MissionModel Mission 
+        public MissionFileModel MissionFile
         {
-            get { return _mission; }
+            get { return _missionFile; }
             set
             {
-                _mission = value;
-                NotifyOfPropertyChange(() => Mission);
+                _missionFile = value;
+                NotifyOfPropertyChange(() => MissionFile);
             }
         }
-
-        public MissionFileModel MissionFile { get; set; }
 
         public MissionDetailsViewModel(IEventAggregator eventAggregator, IWindowManager windowManager)
         {
@@ -41,46 +39,10 @@ namespace EMV.ViewModels
             _windowManager = windowManager;
         }
 
-        public void AddValue(GroupNodeModel node)
-        {
-            node.Nodes.Add(new ValueNodeModel() { Parent = node }); ;
-        }
-
-        public void AddGroup(GroupNodeModel node)
-        {
-            node.Nodes.Add(new GroupNodeModel() { Parent = node });
-        }
-
-        public void RemoveValue(ValueNodeModel node)
-        {
-            node.Parent.Nodes.Remove(node);
-        }
-
-        public void RemoveGroup(GroupNodeModel node)
-        {
-            node.Parent.Nodes.Remove(node);
-        }
-
         public Task HandleAsync(MissionFileModel message, CancellationToken cancellationToken)
         {
             MissionFile = message;
             return Task.CompletedTask;
-        }
-
-        public Task HandleAsync(MissionModel message, CancellationToken cancellationToken)
-        {
-            Mission = message;
-            return Task.CompletedTask;
-        }
-
-        public void PickGfx()
-        {
-            GfxDialogViewModel gfxDialog = IoC.Get<GfxDialogViewModel>();
-            gfxDialog.GfxFiles = GfxStorage.Instance.GfxFiles;
-
-            var result = _windowManager.ShowDialogAsync(gfxDialog);
-            if (result.Result.GetValueOrDefault())
-                Mission.Icon = gfxDialog.SelectedIcon.Key;
         }
     }
 }

@@ -24,9 +24,5 @@ namespace EMV.Views
         {
             InitializeComponent();
         }
-
-        private void SaveCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-        }
     }
 }

@@ -8,80 +8,17 @@
              xmlns:cal="http://caliburnmicro.com"
              xmlns:converters="clr-namespace:EMV.Converters"
              mc:Ignorable="d" 
+xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+Background="{DynamicResource MaterialDesignPaper}"
+TextElement.FontWeight="Medium"
+TextElement.FontSize="14"
+FontFamily="{materialDesign:MaterialDesignFont}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ScrollViewer>
             <StackPanel>
-                <Label Content="Mission name"/>
-                <TextBox Text="{Binding Mission.Name}"/>
-
-                <Label Content="Mission title"/>
-                <TextBox Text="{Binding Mission.Title}"/>
-
-                <Label Content="Position" />
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Text="{Binding Mission.Position}" MinWidth="75"/>
-                    <TextBlock Text="{Binding Mission.RealPosition, StringFormat='(\{0\})'}" Foreground="Gray" Margin="10,0,0,0"/>
-                </StackPanel>
-
-                <Label Content="Mission Icon" />
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Text="{Binding Mission.Icon}" MinWidth="50"/>
-                    <Button x:Name="PickGfx" Content="GFX Picker" Margin="10,0"/>
-                </StackPanel>
-
-                <Label Content="Required missions"/>
-                <DataGrid ItemsSource="{Binding Mission.RequiredMissions}" AutoGenerateColumns="False" CanUserAddRows="True" IsReadOnly="False" ScrollViewer.CanContentScroll="False">
-                    <DataGrid.Template>
-                        <ControlTemplate>
-                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
-                                <ItemsPresenter/>
-                            </Border>
-                        </ControlTemplate>
-                    </DataGrid.Template>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Width="auto" Header="Required missions" Binding="{Binding Path=Name}" IsReadOnly="False"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-
-                <Label Content="Description"/>
-                <TextBox Text="{Binding Mission.Description}" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
-                <local:BindableRichTextBox BindableDocument="{Binding Mission.Description, Converter={x:Static converters:RichTextBoxConverter.Default}, Mode=OneWay}" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" FontWeight="Bold" Background="#FF304976"/>
-
-                <Label Content="Provinces to highlight" DataContext="{Binding Path=Mission.ProvincesToHighlight}" Tag="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}}">
-                    <Label.ContextMenu>
-                        <ContextMenu cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                            <MenuItem Header="Add single" cal:Message.Attach="AddValue($dataContext)"/>
-                            <MenuItem Header="Add group" cal:Message.Attach="AddGroup($dataContext)"/>
-                        </ContextMenu>
-                    </Label.ContextMenu>
-                </Label>
-                
-                <TreeView ItemsSource="{Binding Mission.ProvincesToHighlight.Nodes}" Style="{StaticResource ScrollableTreeView}">
-                </TreeView>
-
-                <Label Content="Trigger" DataContext="{Binding Path=Mission.Trigger}" Tag="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}}">
-                    <Label.ContextMenu>
-                        <ContextMenu cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                            <MenuItem Header="Add single" cal:Message.Attach="AddValue($dataContext)"/>
-                            <MenuItem Header="Add group" cal:Message.Attach="AddGroup($dataContext)"/>
-                        </ContextMenu>
-                    </Label.ContextMenu>
-                </Label>
-                <TreeView ItemsSource="{Binding Mission.Trigger.Nodes}" Style="{StaticResource ScrollableTreeView}">
-                </TreeView>
-
-                <Label Content="Effect" DataContext="{Binding Path=Mission.Effect}" Tag="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}}">
-                    <Label.ContextMenu>
-                        <ContextMenu cal:Action.TargetWithoutContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
-                            <MenuItem Header="Add single" cal:Message.Attach="AddValue($dataContext)"/>
-                            <MenuItem Header="Add group" cal:Message.Attach="AddGroup($dataContext)"/>
-                        </ContextMenu>
-                    </Label.ContextMenu>
-                </Label>
-                
-                <TreeView ItemsSource="{Binding Mission.Effect.Nodes}" Style="{StaticResource ScrollableTreeView}">
-                </TreeView>
+                <CheckBox Content="Country flags and such" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

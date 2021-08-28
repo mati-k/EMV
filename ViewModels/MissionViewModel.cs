@@ -14,15 +14,14 @@ using System.Threading.Tasks;
 
 namespace EMV.ViewModels
 {
-    public class MissionViewModel : Conductor<object>.Collection.AllActive, IHandle<MissionModel>, IHandle<MissionBranchModel>
+    public class MissionViewModel : Conductor<object>.Collection.AllActive
     {
         private IEventAggregator _eventAggregator;
         private MissionFileModel _missionFile;
 
         private MissionTreeViewModel _missionTreeViewModel;
         private MissionDetailsViewModel _missionDetailsViewModel;
-        private BranchDetailsViewModel _branchDetailsViewModel;
-        private Screen _selectedDetailsVM;
+
         private IModData _mod;
 
         public IDropTarget DropHandler { get; } = new DropTargetHandler();
@@ -47,13 +46,13 @@ namespace EMV.ViewModels
             }
         }
 
-        public Screen SelectedDetailsVM
+        public MissionDetailsViewModel MissionDetailsVM
         {
-            get { return _selectedDetailsVM; }
+            get { return _missionDetailsViewModel; }
             set
             {
-                _selectedDetailsVM = value;
-                NotifyOfPropertyChange(() => SelectedDetailsVM);
+                _missionDetailsViewModel = value;
+                NotifyOfPropertyChange(() => MissionDetailsVM);
             }
         }
 
@@ -67,7 +66,7 @@ namespace EMV.ViewModels
             }
         }
 
-        public MissionViewModel(IEventAggregator eventAggregator, MissionTreeViewModel missionTreeViewModel, MissionDetailsViewModel missionDetailsViewModel, BranchDetailsViewModel branchDetailsViewModel, IModData mod)
+        public MissionViewModel(IEventAggregator eventAggregator, MissionTreeViewModel missionTreeViewModel, MissionDetailsViewModel missionDetailsViewModel, IModData mod)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.SubscribeOnPublishedThread(this);
@@ -75,52 +74,16 @@ namespace EMV.ViewModels
             _mod = mod;
 
             MissionTreeVM = missionTreeViewModel;
-            _missionDetailsViewModel = missionDetailsViewModel;
-            _branchDetailsViewModel = branchDetailsViewModel;
+            MissionDetailsVM = missionDetailsViewModel;
 
             ActivateItemAsync(MissionTreeVM);
-        }
-
-        public void SelectedMissionElementChanged(object selected)
-        {
-            if (selected is MissionBranchModel branch)
-            {
-                _eventAggregator.PublishOnUIThreadAsync(branch);
-            }
-
-            else if (selected is MissionModel mission)
-            {
-                _eventAggregator.PublishOnUIThreadAsync(mission);
-            }
+            ActivateItemAsync(MissionDetailsVM);
         }
 
         public void SelectTree(MissionFileModel missionFile)
         {
+            MissionFile = missionFile;
             _eventAggregator.PublishOnUIThreadAsync(missionFile);
-        }
-
-        public Task HandleAsync(MissionFileModel message, CancellationToken cancellationToken)
-        {
-            MissionFile = message;
-            return Task.CompletedTask;
-        }
-
-        public Task HandleAsync(MissionModel message, CancellationToken cancellationToken)
-        {
-            if (_branchDetailsViewModel.IsActive)
-                DeactivateItemAsync(_branchDetailsViewModel, false);
-
-            SelectedDetailsVM = _missionDetailsViewModel;
-            return ActivateItemAsync(_missionDetailsViewModel);
-        }
-
-        public Task HandleAsync(MissionBranchModel message, CancellationToken cancellationToken)
-        {
-            if (_missionDetailsViewModel.IsActive)
-                DeactivateItemAsync(_missionDetailsViewModel, false);
-
-            SelectedDetailsVM = _branchDetailsViewModel;
-            return ActivateItemAsync(_branchDetailsViewModel);
         }
     }
 }

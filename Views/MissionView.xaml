@@ -19,6 +19,7 @@ FontFamily="{materialDesign:MaterialDesignFont}"
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
@@ -35,6 +36,6 @@ FontFamily="{materialDesign:MaterialDesignFont}"
         </ListView>
         
         <ContentControl x:Name="MissionTreeVM" Grid.Column="1" />
-        <ContentControl x:Name="SelectedDetailsVM" Grid.Column="2" />
+        <ContentControl x:Name="MissionDetailsVM" Grid.Column="2" />
     </Grid>
 </UserControl>

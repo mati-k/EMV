@@ -14,9 +14,6 @@ TextElement.FontWeight="Medium"
 TextElement.FontSize="14"
 FontFamily="{materialDesign:MaterialDesignFont}"
         Title="EU4 Mission Tool" Height="450" Width="1200">
-    <Window.CommandBindings>
-        <CommandBinding Command="Save" Executed="SaveCommand" />
-    </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
@@ -31,20 +28,8 @@ FontFamily="{materialDesign:MaterialDesignFont}"
         </Grid.RowDefinitions>
 
         <Menu Grid.ColumnSpan="3" IsMainMenu="True">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Save" Command="Save"/>
-            </MenuItem>
-            <MenuItem Header="_Fancy Text" ItemsSource="{Binding Source={x:Static models:FontColors.Instance}, Path=Colors}">
-                <MenuItem.ItemTemplate>
-                    <DataTemplate DataType="{x:Type models:ColorKey}">
-                        <MenuItem Foreground="{Binding Brush}"
-                                  cal:Message.Attach="[Event Click] = [Action CopyFontColor()]">
-                            <MenuItem.Header>
-                                <Run Text="{Binding Key, StringFormat=§{0} Text Here §!}"/>
-                            </MenuItem.Header>
-                        </MenuItem>
-                    </DataTemplate>
-                </MenuItem.ItemTemplate>
+            <MenuItem Header="_Options">
+                <MenuItem Header="_Nothing yet"/>
             </MenuItem>
         </Menu>
         <ContentControl x:Name="ActiveItem" Grid.Column="1" Grid.Row="2" Margin="10"/>

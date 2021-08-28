@@ -7,6 +7,7 @@
              xmlns:converters="clr-namespace:EMV.Converters" xmlns:models="clr-namespace:EMV.Models" d:DataContext="{d:DesignInstance Type=models:MissionModel}"
              xmlns:shared="clr-namespace:EMV.SharedData"
              mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              d:DesignHeight="122" d:DesignWidth="104">
     <Grid>
         <Image Source="{Binding IconPath, Converter={x:Static converters:DDSConverter.Default}}" HorizontalAlignment="Left" Margin="22,20,0,0" Width="59" Height="63" VerticalAlignment="Top"/>
@@ -14,7 +15,7 @@
 
         <Image Source="{Binding Source={x:Static shared:StaticPaths.Instance}, Path=MissionConditionPath, Converter={x:Static converters:DDSConverter.Default}}" HorizontalAlignment="Left" Stretch="None" Margin="0,7,0,0" VerticalAlignment="Top">
             <Image.ToolTip>
-                <ToolTip Width="350" Background="#F20D0D0D">
+                <ToolTip MaxWidth="400" Background="#F20D0D0D">
                     <TreeView ItemsSource="{Binding Trigger.Nodes}" Style="{StaticResource ScrollableTreeView}" />
                 </ToolTip>
             </Image.ToolTip>
@@ -22,7 +23,7 @@
 
         <Image Source="{Binding Source={x:Static shared:StaticPaths.Instance}, Path=MissionRewardPath, Converter={x:Static converters:DDSConverter.Default}}" HorizontalAlignment="Left" Width="33" Stretch="None" Margin="70,7,0,0" VerticalAlignment="Top">
             <Image.ToolTip>
-                <ToolTip Width="350" Background="#F20D0D0D">
+                <ToolTip MaxWidth="400" Background="#F20D0D0D">
                     <TreeView ItemsSource="{Binding Effect.Nodes}" Style="{StaticResource ScrollableTreeView}" />
                 </ToolTip>
             </Image.ToolTip>
@@ -31,7 +32,7 @@
         <local:BindableRichTextBox BindableDocument="{Binding TitleOrName, Converter={x:Static converters:RichTextBoxConverter.Default}, Mode=OneWay}" TextAlign="Center" HorizontalAlignment="Center" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" Margin="8,84,0,0" VerticalAlignment="Top" Foreground="White" Width="96" FontWeight="Bold" Background="Transparent" BorderThickness="0"/>
 
         <Grid.ToolTip>
-            <ToolTip Width="350" Background="#F20D0D0D">
+            <ToolTip MaxWidth="400" Background="#F20D0D0D">
                 <StackPanel>
                     <TextBlock Text="{Binding TitleOrName}" Foreground="#FFCB9F0B" FontWeight="Bold"/>
                     <local:BindableRichTextBox BindableDocument="{Binding Description, Converter={x:Static converters:RichTextBoxConverter.Default}, Mode=OneWay}" TextAlign="Left" HorizontalAlignment="Center" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" Background="Transparent" BorderThickness="0"/>
