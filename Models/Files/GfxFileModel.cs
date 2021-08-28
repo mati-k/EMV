@@ -1,13 +1,14 @@
-﻿using Pdoxcl2Sharp;
+﻿using EMV.Models.Files;
+using Pdoxcl2Sharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMV.Models
+namespace EMV.Models.Files
 {
-    public class GfxFileModel : IParadoxRead
+    public class GfxFileModel : ModFileBase
     {
         public IList<GfxModel> Gfx { get; set; }
         public IList<GFXOther> OtherGfx { get; set; }
@@ -18,7 +19,7 @@ namespace EMV.Models
             OtherGfx = new List<GFXOther>();
         }
 
-        public void TokenCallback(ParadoxParser parser, string token)
+        public override void TokenCallback(ParadoxParser parser, string token)
         {
             if (token == null)
                 return;

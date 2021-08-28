@@ -29,7 +29,7 @@ FontFamily="{materialDesign:MaterialDesignFont}"
         <ListView Grid.Column="0" ItemsSource="{Binding Mod.MissionFiles}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Button Content="{Binding FileName}" />
+                    <Button Content="{Binding FileName}" cal:Message.Attach="SelectTree($dataContext)"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

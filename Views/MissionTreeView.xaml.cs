@@ -1,5 +1,6 @@
 ﻿using EMV.Converters;
 using EMV.Models;
+using EMV.Models.Files;
 using EMV.SharedData;
 using EMV.ViewModels;
 using System;

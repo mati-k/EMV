@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <ScrollViewer>
-            <Grid x:Name="MainGrid"/>
+            <Grid x:Name="MainGrid" Background="#FF2D373F"/>
         </ScrollViewer>
     </Grid>
 </UserControl>

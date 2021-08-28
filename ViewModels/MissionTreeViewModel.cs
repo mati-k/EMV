@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
+using EMV.Models.Files;
 
 namespace EMV.ViewModels
 {

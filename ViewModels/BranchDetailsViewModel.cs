@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using EMV.Handlers;
 using EMV.Models;
+using EMV.Models.Files;
 using GongSolutions.Wpf.DragDrop;
 using System;
 using System.Collections.Generic;

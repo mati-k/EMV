@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using EMV.Models.Files;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,16 @@ namespace EMV.Models
         public ModData()
         {
             this.MissionFiles = new BindableCollection<MissionFileModel>();
+        }
+
+        public void BindLocalisation(Dictionary<string, string> localisation)
+        {
+            foreach (MissionFileModel missionFile in MissionFiles)
+            {
+                missionFile.BindLocalisation(localisation);
+            }
+
+            List<string> used = new List<string>();
         }
     }
 }

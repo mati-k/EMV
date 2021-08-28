@@ -2,6 +2,7 @@
 using Caliburn.Micro;
 using EMV.Handlers;
 using EMV.Models;
+using EMV.Models.Files;
 using EMV.Views;
 using GongSolutions.Wpf.DragDrop;
 using System;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace EMV.ViewModels
 {
-    public class MissionViewModel : Conductor<object>.Collection.AllActive, IHandle<MissionFileModel>, IHandle<MissionModel>, IHandle<MissionBranchModel>
+    public class MissionViewModel : Conductor<object>.Collection.AllActive, IHandle<MissionModel>, IHandle<MissionBranchModel>
     {
         private IEventAggregator _eventAggregator;
         private MissionFileModel _missionFile;
@@ -93,31 +94,9 @@ namespace EMV.ViewModels
             }
         }
 
-        public void AddBranch()
+        public void SelectTree(MissionFileModel missionFile)
         {
-            MissionFile.Branches.Add(new MissionBranchModel(MissionFile) { Name = "new_branch" });
-        }
-
-        public void RemoveBranch(MissionBranchModel branch)
-        {
-            MissionFile.Branches.Remove(branch);
-        }
-
-        public void AddMission(MissionBranchModel branch)
-        {
-            branch.Missions.Add(new MissionModel(branch) { Name = "new_mission" });
-        }
-
-        public void RemoveMission(MissionModel mission)
-        {
-            foreach (MissionBranchModel branch in MissionFile.Branches)
-            {
-                if (branch.Missions.Contains(mission))
-                {
-                    branch.Missions.Remove(mission);
-                    break;
-                }
-            }
+            _eventAggregator.PublishOnUIThreadAsync(missionFile);
         }
 
         public Task HandleAsync(MissionFileModel message, CancellationToken cancellationToken)

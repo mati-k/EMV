@@ -27,7 +27,6 @@ namespace EMV.Views
 
         private void SaveCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            (DataContext as ShellViewModel).Save();
         }
     }
 }

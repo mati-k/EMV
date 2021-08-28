@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using EMV.Exceptions;
+using EMV.Models.Files;
 using EMV.SharedData;
 using Pdoxcl2Sharp;
 using System;

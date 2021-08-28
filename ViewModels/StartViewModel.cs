@@ -9,12 +9,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.IO;
+using EMV.Parsing;
 
 namespace EMV.ViewModels
 {
     public class StartViewModel : Screen
     {
         private IEventAggregator _eventAggregator;
+        private IModData _mod;
+        private IModLoader _modLoader;
+
         private FilesModel _filesModel;
 
         public FilesModel FilesModel
@@ -27,11 +31,12 @@ namespace EMV.ViewModels
             }
         }
 
-        public IDropTarget DropHandler { get; } = new DropTargetHandler();
-
-        public StartViewModel(IEventAggregator eventAggregator)
+        public StartViewModel(IEventAggregator eventAggregator, IModData mod, IModLoader modLoader)
         {
             _eventAggregator = eventAggregator;
+            _mod = mod;
+            _modLoader = modLoader;
+
             FilesModel = EMV.Models.FilesModel.ReadFromJson();
         }
 
@@ -88,7 +93,9 @@ namespace EMV.ViewModels
         public void Continue(string filesModel_MissionFile, string filesModel_LocalisationFile, string filesModel_VanillaFolder, string filesModel_ModFolder)
         {
             FilesModel.SaveToJson();
-            _eventAggregator.PublishOnUIThreadAsync(FilesModel);
+            _modLoader.LoadModData(_mod, FilesModel);
+
+            _eventAggregator.PublishOnUIThreadAsync(new WindowMessage(typeof(MenuViewModel)));
         }
     }
 }

@@ -10,6 +10,7 @@ using EMV.SharedData;
 using GongSolutions.Wpf.DragDrop;
 using EMV.Handlers;
 using AutoCompleteTextBox.Editors;
+using EMV.Models.Files;
 
 namespace EMV.ViewModels
 {

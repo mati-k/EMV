@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using EMV.Models;
+using EMV.Parsing;
 using EMV.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -61,6 +62,7 @@ namespace EMV
             _container.PerRequest<MessageDialogViewModel>();
 
             _container.Singleton<IModData, ModData>();
+            _container.PerRequest<IModLoader, ModLoader>();
         }
     }
 }
