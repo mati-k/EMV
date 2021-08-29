@@ -46,7 +46,7 @@ namespace EMV.Views
 
             foreach (MissionBranchModel branch in missionFile.Branches)
             {
-                if (branch.Missions.Count == 0 || !branch.IsActive)
+                if (branch.Missions.Count == 0 || !branch.IsBranchValid(missionFile.Flags))
                     continue;
 
                 foreach (MissionModel mission in branch.Missions)
@@ -75,7 +75,7 @@ namespace EMV.Views
         private void UpdateMissionPositions(MissionFileModel missionFile)
         {
             Dictionary<string, Tuple<MissionModel, bool>> missions = new Dictionary<string, Tuple<MissionModel, bool>>();
-            missionFile.Branches.Where(b => b.IsActive).SelectMany(branch => branch.Missions).ToList()
+            missionFile.Branches.Where(b => b.IsBranchValid(missionFile.Flags)).SelectMany(branch => branch.Missions).ToList()
                 .ForEach(mission => {
                     if (!missions.ContainsKey(mission.Name))
                         missions.Add(mission.Name, new Tuple<MissionModel, bool>(mission, false));
@@ -136,7 +136,7 @@ namespace EMV.Views
         {
             foreach (MissionBranchModel branch in missionFile.Branches)
             {
-                if (!branch.IsActive)
+                if (!branch.IsBranchValid(missionFile.Flags))
                     continue;
 
                 foreach (MissionModel mission in branch.Missions)

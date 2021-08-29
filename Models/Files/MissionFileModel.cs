@@ -12,6 +12,7 @@ namespace EMV.Models.Files
     public class MissionFileModel : ModFileBase
     {
         public BindableCollection<MissionBranchModel> Branches { get; set; } = new BindableCollection<MissionBranchModel>();
+        public BindableCollection<Flag> Flags { get; set; } = new BindableCollection<Flag>();
 
         public override void TokenCallback(ParadoxParser parser, string token)
         {
@@ -35,6 +36,22 @@ namespace EMV.Models.Files
                     }
                 }
             }
+        }
+
+        public void FindPotentialTagsAndFlags()
+        {
+            foreach (MissionBranchModel branch in Branches)
+            {
+                List<string> flags = branch.GetPotentialTagsAndFlags();
+                foreach (string flag in flags)
+                {
+                    if (!Flags.Any(f => f.Value.Equals(flag)))
+                        Flags.Add(new Flag(flag));
+                }
+            }
+
+            if (Flags.Count > 0)
+                Flags[0].Enabled = true;
         }
     }
 }

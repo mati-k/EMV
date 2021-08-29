@@ -22,6 +22,7 @@ namespace EMV.Models
             foreach (MissionFileModel missionFile in MissionFiles)
             {
                 missionFile.BindLocalisation(localisation);
+                missionFile.FindPotentialTagsAndFlags();
             }
 
             List<string> used = new List<string>();

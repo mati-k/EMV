@@ -11,15 +11,14 @@ using System.Threading.Tasks;
 
 namespace EMV.Models
 {
-    public class MissionBranchModel : PropertyChangedBase, IParadoxRead, IParadoxWrite
+    public class MissionBranchModel : PropertyChangedBase, IParadoxRead
     {
         private string _name;
         private int _slot = 1;
         private bool _generic = false;
         private bool _ai = true;
         private bool _countryShield = true;
-        private NodeModel _potential = DefaultPotential.Instance.Potential.Copy();
-        private bool _isActive = true;
+        private NodeModel _potential;
 
         public string Name
         {
@@ -76,16 +75,6 @@ namespace EMV.Models
             }
         }
         public BindableCollection<MissionModel> Missions { get; set; } = new BindableCollection<MissionModel>();
-        public bool IsActive
-        {
-            get { return _isActive; }
-            set
-            {
-                _isActive = value;
-                NotifyOfPropertyChange(() => IsActive);
-            }
-        }
-
         public MissionFileModel MissionFile { get; set; }
 
         public MissionBranchModel(MissionFileModel missionFile)
@@ -106,36 +95,82 @@ namespace EMV.Models
             }
         }
 
-        public void Write(ParadoxStreamWriter writer)
+        private string GetValueNodeText(ValueNodeModel node)
         {
-            if (Slot <= 0)
-                throw new WrongPositionException(string.Format("Slot must be greater than 0, branch: {0}", Name));
-
-            writer.WriteLine("slot", Slot.ToString(), ValueWrite.LeadingTabs);
-            writer.WriteLine("generic", BoolToString(Generic), ValueWrite.LeadingTabs);
-            writer.WriteLine("ai", BoolToString(AI), ValueWrite.LeadingTabs);
-            writer.WriteLine("has_country_shield", BoolToString(CountryShield), ValueWrite.LeadingTabs);
-
-            Potential.Write(writer);
-            writer.WriteLine();
-
-            foreach (MissionModel mission in Missions)
-            {
-                if (String.IsNullOrWhiteSpace(mission.Name))
-                    throw new MissionNameException(Name);
-
-                writer.WriteLine(mission.Name + " = {", ValueWrite.LeadingTabs);
-                mission.Write(writer);
-                writer.WriteLine("}", ValueWrite.LeadingTabs);
-
-                if (mission != Missions.Last())
-                    writer.WriteLine();
-            }
+            return node.Name + " " + ((ValueNodeModel)node).Value;
         }
 
-        private string BoolToString(bool b)
+        public List<string> GetPotentialTagsAndFlags()
         {
-            return b ? "yes" : "no";
+            return GetPotentialTagsAndFlags(Potential as GroupNodeModel);
+        }
+
+        private List<string> GetPotentialTagsAndFlags(GroupNodeModel localRoot)
+        {
+            List<string> flags = new List<string>();
+
+            foreach (NodeModel node in localRoot.Nodes)
+            {
+                if (node is ValueNodeModel)
+                    flags.Add(GetValueNodeText(node as ValueNodeModel));
+                else
+                    flags.AddRange(GetPotentialTagsAndFlags(node as GroupNodeModel));
+            }
+
+            return flags;
+        }
+
+        public bool IsBranchValid(BindableCollection<Flag> flags)
+        {
+            return ValidateAnd(flags, Potential as GroupNodeModel);
+        }
+
+        private bool ValidateGroup(BindableCollection<Flag> flags, GroupNodeModel root)
+        {
+            if (root.Name.ToUpper().Equals("AND"))
+                return ValidateAnd(flags, root);
+            else if (root.Name.ToUpper().Equals("OR"))
+                return ValidateOr(flags, root);
+            else if (root.Name.ToUpper().Equals("NOT"))
+                return !ValidateOr(flags, root);
+
+            return true;
+        }
+
+        private bool ValidateAnd(BindableCollection<Flag> flags, GroupNodeModel root)
+        {
+            foreach (NodeModel node in root.Nodes)
+            {
+                if (node is ValueNodeModel)
+                {
+                    string text = GetValueNodeText(node as ValueNodeModel);
+                    if (!flags.First(f => f.Value.Equals(text)).Enabled)
+                        return false;
+                }
+
+                else if (!ValidateGroup(flags, node as GroupNodeModel))
+                    return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateOr(BindableCollection<Flag> flags, GroupNodeModel root)
+        {
+            foreach (NodeModel node in (Potential as GroupNodeModel).Nodes)
+            {
+                if (node is ValueNodeModel)
+                {
+                    string text = GetValueNodeText(node as ValueNodeModel);
+                    if (flags.First(f => f.Value.Equals(text)).Enabled)
+                        return true;
+                }
+
+                else if (ValidateGroup(flags, node as GroupNodeModel))
+                    return true;
+            }
+
+            return true;
         }
     }
 }

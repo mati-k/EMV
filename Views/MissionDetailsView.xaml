@@ -18,7 +18,17 @@ FontFamily="{materialDesign:MaterialDesignFont}"
     <Grid>
         <ScrollViewer>
             <StackPanel>
-                <CheckBox Content="Country flags and such" />
+                <ListBox ItemsSource="{Binding MissionFile.Flags}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding Enabled}">
+                                <CheckBox.Content>
+                                    <TextBlock Text="{Binding Value}"/>
+                                </CheckBox.Content>
+                            </CheckBox>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
         </ScrollViewer>
     </Grid>

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
 using EMV.Models.Files;
+using System.ComponentModel;
 
 namespace EMV.ViewModels
 {
@@ -36,111 +37,18 @@ namespace EMV.ViewModels
         {
             MissionFile = message;
 
-            MissionFile.Branches.CollectionChanged += Branches_CollectionChanged;
-            Branches_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, MissionFile.Branches), true);
+            foreach (Flag flag in MissionFile.Flags)
+            {
+                flag.PropertyChanged += FlagChanged;
+            }
 
             MissionTreeChanged();
             return Task.CompletedTask;
         }
 
-        private void Branches_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void FlagChanged(object sender, PropertyChangedEventArgs e)
         {
-            Branches_CollectionChanged(sender, e, false);
-        }
-
-        private void Branches_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e, bool updateHandled)
-        {
-            if (e.NewItems != null)
-            {
-                foreach (MissionBranchModel branch in e.NewItems)
-                {
-                    branch.Missions.CollectionChanged += Missions_CollectionChanged;
-                    branch.PropertyChanged += BranchPropertyChanged;
-                    Missions_CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, branch.Missions), true);
-                }
-            }
-
-            if (e.OldItems != null)
-            {
-                foreach (MissionBranchModel branch in e.OldItems)
-                {
-                    branch.Missions.CollectionChanged -= Missions_CollectionChanged;
-                    branch.PropertyChanged -= BranchPropertyChanged;
-                }
-            }
-
-            if (!updateHandled)
-                MissionTreeChanged();
-        }
-
-        private void Missions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            Missions_CollectionChanged(sender, e, false);
-        }
-
-        private void Missions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e, bool updateHandled)
-        {
-            if (e.NewItems != null)
-            {
-                foreach (MissionModel mission in e.NewItems)
-                {
-                    mission.PropertyChanged += MissionPropertyChanged;
-                    mission.RequiredMissions.CollectionChanged += RequiredMissions_CollectionChanged;
-
-                    foreach (MissionModel required in mission.RequiredMissions)
-                    {
-                        required.PropertyChanged += MissionPropertyChanged;
-                    }
-                }
-            }
-
-            if (e.OldItems != null)
-            {
-                foreach (MissionModel mission in e.OldItems)
-                {
-                    mission.PropertyChanged -= MissionPropertyChanged;
-
-                    mission.RequiredMissions.CollectionChanged -= RequiredMissions_CollectionChanged;
-                    foreach (MissionModel required in mission.RequiredMissions)
-                    {
-                        required.PropertyChanged -= MissionPropertyChanged;
-                    }
-                }
-            }
-
-            if (!updateHandled)
-                MissionTreeChanged();
-        }
-
-        private void RequiredMissions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null)
-            {
-                foreach (MissionModel mission in e.NewItems)
-                {
-                    mission.PropertyChanged += MissionPropertyChanged;
-                }
-            }
-
-            if (e.OldItems != null)
-            {
-                foreach (MissionModel mission in e.OldItems)
-                {
-                    mission.PropertyChanged -= MissionPropertyChanged;
-                }
-            }
-        }
-
-        private void BranchPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Slot" || e.PropertyName == "IsActive")
-                MissionTreeChanged();
-        }
-
-        private void MissionPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Position" || e.PropertyName == "Name")
-                MissionTreeChanged();
+            MissionTreeChanged();
         }
 
         private void MissionTreeChanged()

@@ -10,7 +10,7 @@ using EMV.Exceptions;
 
 namespace EMV.Models
 {
-    public class MissionModel : PropertyChangedBase, IParadoxRead, IParadoxWrite
+    public class MissionModel : PropertyChangedBase, IParadoxRead
     {
         private string _name;
         private int _position = 1;
@@ -149,52 +149,6 @@ namespace EMV.Models
                 case "trigger": Trigger = parser.Parse(new GroupNodeModel() { Name = "trigger" }); break;
                 case "effect": Effect = parser.Parse(new GroupNodeModel() { Name = "effect" }); break;
             }
-        }
-
-        public void Write(ParadoxStreamWriter writer)
-        {
-            if (String.IsNullOrWhiteSpace(Icon))
-                throw new IconException(Name);
-            writer.WriteLine("icon", Icon, ValueWrite.LeadingTabs);
-
-            if (Position <= 0)
-                throw new WrongPositionException(string.Format("Position must be greater than 0, mission: {0}", Name));
-            writer.WriteLine("position", Position.ToString(), ValueWrite.LeadingTabs);
-
-            RequiredMissions = new BindableCollection<MissionModel>(RequiredMissions.Where(mission => !String.IsNullOrWhiteSpace(mission.Name)));
-            if (RequiredMissions != null && RequiredMissions.Count > 0)
-            {
-                if (RequiredMissions.Count > 1)
-                {
-                    writer.WriteLine("required_missions = {", ValueWrite.LeadingTabs);
-                    foreach (MissionModel required in RequiredMissions)
-                    {
-                        writer.WriteLine(required.Name, ValueWrite.LeadingTabs);
-                    }
-                    writer.WriteLine("}", ValueWrite.LeadingTabs);
-                }
-
-                else
-                {
-                    writer.WriteLine("required_missions = { " + RequiredMissions[0].Name + " } ", ValueWrite.LeadingTabs);
-                }
-            }
-
-            if (ProvincesToHighlight != null)
-            {
-                ProvincesToHighlight.Write(writer);
-                writer.WriteLine();
-
-            }
-
-            if (Trigger == null)
-                Trigger = new GroupNodeModel() { Name = "trigger" };
-            Trigger.Write(writer);
-            writer.WriteLine();
-
-            if (Effect == null)
-                Effect = new GroupNodeModel() { Name = "effect" };
-            Effect.Write(writer);
         }
     }
 }
