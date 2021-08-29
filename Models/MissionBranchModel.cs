@@ -157,7 +157,7 @@ namespace EMV.Models
 
         private bool ValidateOr(BindableCollection<Flag> flags, GroupNodeModel root)
         {
-            foreach (NodeModel node in (Potential as GroupNodeModel).Nodes)
+            foreach (NodeModel node in root.Nodes)
             {
                 if (node is ValueNodeModel)
                 {

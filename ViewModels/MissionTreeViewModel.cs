@@ -35,6 +35,7 @@ namespace EMV.ViewModels
 
         public Task HandleAsync(MissionFileModel message, CancellationToken cancellationToken)
         {
+            ClearPrevious();
             MissionFile = message;
 
             foreach (Flag flag in MissionFile.Flags)
@@ -49,6 +50,17 @@ namespace EMV.ViewModels
         private void FlagChanged(object sender, PropertyChangedEventArgs e)
         {
             MissionTreeChanged();
+        }
+
+        private void ClearPrevious()
+        {
+            if (MissionFile != null)
+            {
+                foreach (Flag flag in MissionFile.Flags)
+                {
+                    flag.PropertyChanged -= FlagChanged;
+                }
+            }
         }
 
         private void MissionTreeChanged()
