@@ -28,9 +28,7 @@ FontFamily="{materialDesign:MaterialDesignFont}"
         </Grid.RowDefinitions>
 
         <Menu Grid.ColumnSpan="3" IsMainMenu="True">
-            <MenuItem Header="_Options">
-                <MenuItem Header="_Nothing yet"/>
-            </MenuItem>
+            <MenuItem Header="Menu" cal:Message.Attach="GoToMenu()"/>
         </Menu>
         <ContentControl x:Name="ActiveItem" Grid.Column="1" Grid.Row="2" Margin="10"/>
     </Grid>

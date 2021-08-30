@@ -51,5 +51,10 @@ namespace EMV.ViewModels
         {
             return ActivateItemAsync(IoC.GetInstance(message.ViewModelType, null));
         }
+
+        public void GoToMenu()
+        {
+            ActivateItemAsync(IoC.GetInstance(typeof(MenuViewModel), null));
+        }
     }
 }
