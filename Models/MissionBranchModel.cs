@@ -170,7 +170,7 @@ namespace EMV.Models
                     return true;
             }
 
-            return true;
+            return false;
         }
     }
 }
