@@ -19,7 +19,7 @@ namespace EMV.Models.Files
             Branches.Add(parser.Parse(new MissionBranchModel(this) { Name = token }));
         }
 
-        public void BindLocalisation(Dictionary<string, string> localisation)
+        public override void BindLocalisation(Dictionary<string, string> localisation)
         {
             foreach (MissionBranchModel branch in Branches)
             {

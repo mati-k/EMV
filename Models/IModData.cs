@@ -11,6 +11,7 @@ namespace EMV.Models
     public interface IModData
     {
         public BindableCollection<MissionFileModel> MissionFiles { get; set; }
+        public BindableCollection<ModifierFile> ModifierFiles { get; set; }
 
         public void BindLocalisation(Dictionary<string, string> localisation);
     }

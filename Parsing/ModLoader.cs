@@ -22,11 +22,35 @@ namespace EMV.Parsing
             this.filesModel = files;
 
             mod.MissionFiles.AddRange(LoadModFolder<MissionFileModel>("missions").Select(pair => pair.Value));
-            
+            mod.ModifierFiles.AddRange(LoadModFolder<ModifierFile>("common/event_modifiers").Select(pair => pair.Value));
+
             LoadGfx();
             Dictionary<string, string> localisation = LoadLocalisation();
 
             mod.BindLocalisation(localisation);
+
+            List<Tuple<string, int>> counts = new List<Tuple<string, int>>();
+            foreach (MissionFileModel mission in mod.MissionFiles)
+            {
+                int count = 0;
+                foreach (MissionBranchModel branch in mission.Branches)
+                {
+                    count += branch.Missions.Count;
+                }
+                counts.Add(new Tuple<string, int>(mission.FileName, count));
+            }
+            counts = counts.OrderBy(c => c.Item2).Reverse().ToList();
+
+            using (FileStream f = new FileStream("counts.txt", FileMode.Create))
+            {
+                using (StreamWriter writer = new StreamWriter(f))
+                {
+                    for (int i = 0; i < counts.Count; i++)
+                    {
+                        writer.WriteLine(counts[i].Item1 + ": " + counts[i].Item2);
+                    }
+                }
+            }
         }
 
         private Dictionary<string, T> LoadModFolder<T>(string folder, bool includeVanilla = false) where T : ModFileBase, new()

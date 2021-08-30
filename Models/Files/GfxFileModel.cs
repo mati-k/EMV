@@ -29,5 +29,9 @@ namespace EMV.Models.Files
             else if (!token.Equals("spriteTypes"))
                 OtherGfx.Add(parser.Parse(new GFXOther(token, null)));
         }
+
+        public override void BindLocalisation(Dictionary<string, string> localisation)
+        {
+        }
     }
 }

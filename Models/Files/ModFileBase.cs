@@ -13,5 +13,6 @@ namespace EMV.Models.Files
         public string FileName { get; set; }
 
         public abstract void TokenCallback(ParadoxParser parser, string token);
+        public abstract void BindLocalisation(Dictionary<string, string> localisation);
     }
 }
