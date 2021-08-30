@@ -25,6 +25,11 @@ namespace EMV.ViewModels
             _eventAggregator.PublishOnUIThreadAsync(new WindowMessage(typeof(MissionViewModel)));
         }
 
+        public void Modifiers()
+        {
+            _eventAggregator.PublishOnUIThreadAsync(new WindowMessage(typeof(ModifierViewModel)));
+        }
+
         public Task HandleAsync(ModData message, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;

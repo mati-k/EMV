@@ -8,16 +8,25 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace EMV.Converters
 {
     public class RichTextBoxConverter : IValueConverter
     {
-        private static readonly RichTextBoxConverter defaultInstace = new RichTextBoxConverter();
+        private char defaultBrush;
+
+        private static readonly RichTextBoxConverter defaultInstace = new RichTextBoxConverter() { defaultBrush = 'W' };
+        private static readonly RichTextBoxConverter blackDefault = new RichTextBoxConverter() { defaultBrush = 'b' };
 
         public static RichTextBoxConverter Default
         {
-            get { return RichTextBoxConverter.defaultInstace; }
+            get { return defaultInstace; }
+        }
+
+        public static RichTextBoxConverter Black
+        {
+            get { return blackDefault; }
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -62,7 +71,7 @@ namespace EMV.Converters
                 if (i == 0)
                 {
                     range.Text = formats[i];
-                    range.ApplyPropertyValue(TextElement.ForegroundProperty, FontColors.Instance.Colors.Where(i => i.Key == 'W').First().Brush);
+                    range.ApplyPropertyValue(TextElement.ForegroundProperty, FontColors.Instance.Colors.Where(i => i.Key == 'b').First().Brush);
                     continue;
                 }
 
@@ -80,7 +89,7 @@ namespace EMV.Converters
 
                 if (formatCharacters.Count == 0 || !FontColors.Instance.Colors.Where(i => i.Key == formatCharacters.Peek()).Any())
                 {
-                    range.ApplyPropertyValue(TextElement.ForegroundProperty, FontColors.Instance.Colors.Where(i => i.Key == 'W').First().Brush);
+                    range.ApplyPropertyValue(TextElement.ForegroundProperty, FontColors.Instance.Colors.Where(i => i.Key == defaultBrush).First().Brush);
                 }
 
                 else

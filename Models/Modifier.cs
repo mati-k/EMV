@@ -8,7 +8,23 @@ namespace EMV.Models
 {
     public class Modifier : GroupNodeModel
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
+        private string _titile;
+        
+        public string Title
+        {
+            get
+            {
+                if (String.IsNullOrWhiteSpace(_titile))
+                    return Name;
+                return _titile;
+            }
+
+            set
+            {
+                _titile = value;
+                NotifyOfPropertyChange(() => Title);
+            }
+        }
+        public string Description { get; set; } = "";
     }
 }
