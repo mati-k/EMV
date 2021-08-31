@@ -12,11 +12,13 @@ namespace EMV.Models
     {
         public BindableCollection<MissionFileModel> MissionFiles { get; set; }
         public BindableCollection<ModifierFile> ModifierFiles { get; set; }
+        public BindableCollection<EventFile> EventFiles { get; set; }
 
         public ModData()
         {
             this.MissionFiles = new BindableCollection<MissionFileModel>();
             this.ModifierFiles = new BindableCollection<ModifierFile>();
+            this.EventFiles = new BindableCollection<EventFile>();
         }
 
         public void BindLocalisation(Dictionary<string, string> localisation)
@@ -30,6 +32,11 @@ namespace EMV.Models
             foreach (ModifierFile modifierFile in ModifierFiles)
             {
                 modifierFile.BindLocalisation(localisation);
+            }
+
+            foreach (EventFile eventFile in EventFiles)
+            {
+                eventFile.BindLocalisation(localisation);
             }
         }
     }

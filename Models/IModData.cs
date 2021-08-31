@@ -12,6 +12,7 @@ namespace EMV.Models
     {
         public BindableCollection<MissionFileModel> MissionFiles { get; set; }
         public BindableCollection<ModifierFile> ModifierFiles { get; set; }
+        public BindableCollection<EventFile> EventFiles { get; set; }
 
         public void BindLocalisation(Dictionary<string, string> localisation);
     }

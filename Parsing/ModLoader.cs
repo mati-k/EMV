@@ -23,6 +23,7 @@ namespace EMV.Parsing
 
             mod.MissionFiles.AddRange(LoadModFolder<MissionFileModel>("missions").Select(pair => pair.Value));
             mod.ModifierFiles.AddRange(LoadModFolder<ModifierFile>("common/event_modifiers").Select(pair => pair.Value));
+            mod.EventFiles.AddRange(LoadModFolder<EventFile>("events").Select(pair => pair.Value));
 
             LoadGfx();
             Dictionary<string, string> localisation = LoadLocalisation();
