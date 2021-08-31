@@ -19,8 +19,6 @@ namespace EMV.ViewModels
 {
     public class ShellViewModel : Conductor<object>, IHandle<WindowMessage>
     {
-        private static readonly log4net.ILog log = LogHelper.GetLogger();
-
         private IEventAggregator _eventAggregator;
         private IWindowManager _windowManager;
 

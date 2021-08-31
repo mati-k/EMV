@@ -30,6 +30,11 @@ namespace EMV.ViewModels
             _eventAggregator.PublishOnUIThreadAsync(new WindowMessage(typeof(ModifierViewModel)));
         }
 
+        public void Events()
+        {
+            _eventAggregator.PublishOnUIThreadAsync(new WindowMessage(typeof(ModEventViewModel)));
+        }
+
         public Task HandleAsync(ModData message, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
