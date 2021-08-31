@@ -71,7 +71,7 @@ namespace EMV.Converters
                 if (i == 0)
                 {
                     range.Text = formats[i];
-                    range.ApplyPropertyValue(TextElement.ForegroundProperty, FontColors.Instance.Colors.Where(i => i.Key == 'b').First().Brush);
+                    range.ApplyPropertyValue(TextElement.ForegroundProperty, FontColors.Instance.Colors.Where(i => i.Key == defaultBrush).First().Brush);
                     continue;
                 }
 
