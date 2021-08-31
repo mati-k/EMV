@@ -11,14 +11,18 @@ namespace EMV.Models.Files
     public class EventFile : ModFileBase
     {
         public BindableCollection<ModEvent> Events { get; set; } = new BindableCollection<ModEvent>();
+        public string Namespace { get; set; }
 
         public override void TokenCallback(ParadoxParser parser, string token)
         {
-            if (token.Equals("country_event"))
+            if (token.Equals("namespace"))
+                Namespace = parser.ReadString();
+            else if (token.Equals("country_event"))
                 Events.Add(parser.Parse(new ModEvent(true)));
             else
                 Events.Add(parser.Parse(new ModEvent(false)));
         }
+        private static readonly log4net.ILog log = LogHelper.GetLogger();
 
         public override void BindLocalisation(Dictionary<string, string> localisation)
         {

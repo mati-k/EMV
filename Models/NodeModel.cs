@@ -13,7 +13,7 @@ namespace EMV.Models
     public abstract class NodeModel : PropertyChangedBase, IParadoxRead, IParadoxWrite
     {
         private GroupNodeModel _parent;
-        private string _name;
+        private string _name = "";
 
         public GroupNodeModel Parent
         {
