@@ -2,6 +2,6 @@
 A tool for browsing EU4 mod data.
 
 ## Installation
-Download latest release, unpack and launch EMT.exe
+Download latest release, unpack and launch EMV.exe
 
 Might require installing .NET 5.
