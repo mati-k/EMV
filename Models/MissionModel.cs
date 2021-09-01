@@ -98,6 +98,7 @@ namespace EMV.Models
                 NotifyOfPropertyChange(() => Description);
             }
         }
+
         public string IconPath
         {
             get
@@ -107,6 +108,7 @@ namespace EMV.Models
                 return "";
             }
         }
+
         public string TitleOrName
         {
             get

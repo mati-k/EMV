@@ -15,7 +15,6 @@ namespace EMV.Models
             {
                 case "name": Name = parser.ReadString(); break;
                 default: base.TokenCallback(parser, token); break;
-
             }
         }
     }

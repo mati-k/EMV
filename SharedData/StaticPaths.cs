@@ -52,5 +52,16 @@ namespace EMV.SharedData
                 NotifyOfPropertyChange(() => MissionConditionPath);
             }
         }
+
+        private string _eventOptionPath;
+        public string EventOptionPath
+        {
+            get { return _eventOptionPath; }
+            set
+            {
+                _eventOptionPath = value;
+                NotifyOfPropertyChange(() => EventOptionPath);
+            }
+        }
     }
 }

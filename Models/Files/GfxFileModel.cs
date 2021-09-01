@@ -24,7 +24,7 @@ namespace EMV.Models.Files
             if (token == null)
                 return;
 
-            if (token.Equals("spriteType"))
+            if (token.Equals("spriteType") || token.Equals("textSpriteType"))
                 Gfx.Add(parser.Parse(new GfxModel()));
             else if (!token.Equals("spriteTypes"))
                 OtherGfx.Add(parser.Parse(new GFXOther(token, null)));

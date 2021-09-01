@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using EMV.SharedData;
 using Pdoxcl2Sharp;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,16 @@ namespace EMV.Models
         public GroupNodeModel Immediate { get; set; }
         public GroupNodeModel After { get; set; }
         public BindableCollection<EventOption> Options { get; set; } = new BindableCollection<EventOption>();
+
+        public string PicturePath
+        {
+            get
+            {
+                if (!String.IsNullOrWhiteSpace(Picture) && GfxStorage.Instance.GfxFiles.ContainsKey(Picture))
+                    return GfxStorage.Instance.GfxFiles[Picture];
+                return "";
+            }
+        }
 
         public ModEvent(bool isCountryEvent)
         {

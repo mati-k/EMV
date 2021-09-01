@@ -22,7 +22,6 @@ namespace EMV.Models.Files
             else
                 Events.Add(parser.Parse(new ModEvent(false)));
         }
-        private static readonly log4net.ILog log = LogHelper.GetLogger();
 
         public override void BindLocalisation(Dictionary<string, string> localisation)
         {

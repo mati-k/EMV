@@ -122,7 +122,7 @@ namespace EMV.Parsing
                         {
                             if (gfx.TextureFile != null && !gfxFiles.ContainsKey(gfx.Name))
                             {
-                                if (gfx.TextureFile.Replace(@"//", @"/").StartsWith("gfx/interface/missions"))
+                                if (gfx.TextureFile.Replace(@"//", @"/").StartsWith("gfx/"))
                                     gfxFiles.Add(gfx.Name, Path.Combine(rootDirectory, gfx.TextureFile));
                                 if (gfx.Name.Equals("GFX_mission_icons_frame"))
                                     StaticPaths.Instance.MissionFramePath = Path.Combine(rootDirectory, gfx.TextureFile);
@@ -130,8 +130,11 @@ namespace EMV.Parsing
                                     StaticPaths.Instance.MissionConditionPath = Path.Combine(rootDirectory, gfx.TextureFile);
                                 if (gfx.Name.Equals("gfx_mission_effect"))
                                     StaticPaths.Instance.MissionRewardPath = Path.Combine(rootDirectory, gfx.TextureFile);
+                                if (gfx.Name.Equals("GFX_event_button_547"))
+                                    StaticPaths.Instance.EventOptionPath = Path.Combine(rootDirectory, gfx.TextureFile);
                             }
                         });
+
                     }
                 }
                 catch (Exception e)

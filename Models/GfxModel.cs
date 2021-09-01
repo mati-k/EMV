@@ -19,6 +19,8 @@ namespace EMV.Models
 
             else if (token.Equals("texturefile".ToLower()))
                 TextureFile = parser.ReadString();
+            else
+                parser.ReadString();
         }
     }
 }
