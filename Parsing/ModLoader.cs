@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace EMV.Parsing
 {
@@ -71,7 +72,8 @@ namespace EMV.Parsing
             {
                 try
                 {
-                    using (FileStream fileStream = new FileStream(file, FileMode.Open))
+                    string fileText = LongTextBypass(file);
+                    using (Stream fileStream = new MemoryStream(Encoding.UTF8.GetBytes(fileText ?? "")))
                     {
                         T fileData = ParadoxParser.Parse(fileStream, new T());
                         fileData.FileName = Path.GetFileNameWithoutExtension(file);
@@ -90,6 +92,44 @@ namespace EMV.Parsing
             return data;
         }
         
+        // Temporary fix, parsing library has 256 character limit,
+        // but paradox allowed and used in mods is 512
+        // This solves most likely case for the for = {} effect
+        private string LongTextBypass (string file)
+        {
+            string fileText = File.ReadAllText(file);
+
+            char[] textArray = fileText.ToCharArray();
+
+            int startIndex = fileText.IndexOf("\tfor =", 0);
+            while (startIndex != -1)
+            {
+                startIndex = fileText.IndexOf("effect", startIndex);
+                bool bracketOpen = false;
+                while (startIndex < fileText.Length)
+                {
+                    if (fileText[startIndex] == '"')
+                    {
+                        if (!bracketOpen)
+                        {
+                            textArray[startIndex] = '{';
+                            bracketOpen = true;
+
+                        }
+                        else
+                        {
+                            textArray[startIndex] = '}';
+                            break;
+                        }
+                    }
+                    startIndex++;
+                }
+                startIndex = fileText.IndexOf("\tfor =", startIndex);
+            }
+
+            return new String(textArray);
+        }
+
         private void LoadGfx()
         {
             Dictionary<string, string> gfxFiles = new Dictionary<string, string>();
@@ -164,7 +204,7 @@ namespace EMV.Parsing
                             if (!localisation.ContainsKey(tuple.Item1))
                                 localisation.Add(tuple.Item1, tuple.Item2);
                             else
-                                Console.WriteLine("Duplicate localisation: {0} = {1}", tuple.Item1, tuple.Item2); // Save to file?
+                                Trace.WriteLine(String.Format("Duplicate localisation: {0} = {1}", tuple.Item1, tuple.Item2)); // Save to file?
                     });
                     }
                 }
