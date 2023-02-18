@@ -14,15 +14,31 @@ namespace EMV.Models
 
         public override void TokenCallback(ParadoxParser parser, string token)
         {
-            if (parser.NextIsBracketed())
+            try
             {
-                Nodes.Add(parser.Parse(new GroupNodeModel() { Name = token, Parent = this }));
+                if (parser.NextIsBracketed())
+                {
+                    Nodes.Add(parser.Parse(new GroupNodeModel() { Name = token, Parent = this }));
+                }
+
+                else
+                {
+                    Nodes.Add(new ValueNodeModel() { Name = token, Parent = this, Value = parser.ReadString() });
+                }
+            }
+            catch (Exception e)
+            {
+                StringBuilder nodePath = new StringBuilder(token);
+                GroupNodeModel parent = Parent;
+                while (parent != null)
+                {
+                    nodePath.Append(" <= " + parent.Name);
+                    parent = parent.Parent;
+                }
+
+                throw new Exception($"Token exception, token: {nodePath.ToString()} \n{e.ToString()}");
             }
 
-            else
-            {
-                Nodes.Add(new ValueNodeModel() { Name = token, Parent = this, Value = parser.ReadString() });
-            }
         }
 
         public override bool SinglePath()
