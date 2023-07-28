@@ -48,7 +48,7 @@ namespace EMV.ViewModels
             if (String.IsNullOrWhiteSpace(NameQuery))
                 SelectedModifiers = AllModifiers;
             else
-                SelectedModifiers = new BindableCollection<Modifier>(AllModifiers.Where(m => m.Title.Contains(NameQuery, StringComparison.OrdinalIgnoreCase)));
+                SelectedModifiers = new BindableCollection<Modifier>(AllModifiers.Where(m => m.Title.Contains(NameQuery, StringComparison.OrdinalIgnoreCase) || m.Name.Contains(NameQuery, StringComparison.OrdinalIgnoreCase)));
         }
     }
 }

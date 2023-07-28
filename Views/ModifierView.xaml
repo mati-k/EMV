@@ -33,7 +33,10 @@ FontFamily="{materialDesign:MaterialDesignFont}"
                 <DataTemplate DataType="{x:Type model:Modifier}">
                     <Border x:Name="Border" Padding="8" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource MaterialDesignDivider}">
                         <StackPanel Margin="8 0 0 0" Grid.Column="1">
-                            <local:BindableRichTextBox BindableDocument="{Binding Title, Converter={x:Static converters:RichTextBoxConverter.Black}, Mode=OneWay}" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" FontWeight="Bold" Background="Transparent" BorderThickness="0" MaxWidth="1000"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" Foreground="#FF8A8A8A"/>
+                                <local:BindableRichTextBox BindableDocument="{Binding Title, Converter={x:Static converters:RichTextBoxConverter.Black}, Mode=OneWay}" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" FontWeight="Bold" Background="Transparent" BorderThickness="0" MaxWidth="1000" Margin="15,0,0,0"/>
+                            </StackPanel>
                             <local:BindableRichTextBox BindableDocument="{Binding Description, Converter={x:Static converters:RichTextBoxConverter.Black}, Mode=OneWay}" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" Background="Transparent" BorderThickness="0" MaxWidth="1000"/>
                             <ItemsControl ItemsSource="{Binding Nodes}">
                                 <ItemsControl.ItemTemplate>
