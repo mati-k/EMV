@@ -27,12 +27,12 @@ namespace EMV.Models.Files
         {
             foreach (ModEvent modEvent in Events)
             {
-                if (localisation.ContainsKey(modEvent.Title))
+                if (modEvent.Title != null && localisation.ContainsKey(modEvent.Title))
                 {
                     modEvent.Title = localisation[modEvent.Title];
                 }
 
-                if (localisation.ContainsKey(modEvent.Description))
+                if (modEvent.Description != null && localisation.ContainsKey(modEvent.Description))
                 {
                     modEvent.Description = localisation[modEvent.Description];
                 }
