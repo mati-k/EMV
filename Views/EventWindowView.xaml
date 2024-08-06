@@ -14,38 +14,38 @@ TextElement.FontWeight="Medium"
 TextElement.FontSize="14"
 FontFamily="{materialDesign:MaterialDesignFont}"
              d:DesignHeight="620" d:DesignWidth="564">
-    <Grid Width="564" Background="#FF2A3742">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-        
-        <local:BindableRichTextBox BindableDocument="{Binding Title, Converter={x:Static converters:RichTextBoxConverter.Default}, Mode=OneWay}" TextAlign="Center" HorizontalAlignment="Center" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" Margin="0,39,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="SemiBold" FontSize="22" Background="Transparent" BorderThickness="0" Grid.Row="0"/>
+        <Grid Width="564" Background="#FF2A3742" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
 
-        <StackPanel Background="#FFCEAE80" Margin="10, 20" Grid.Row="1">
-            <Image Source="{Binding PicturePath, Converter={x:Static converters:DDSConverter.Default}}" HorizontalAlignment="Left" Margin="10,10,0,0" Stretch="None" VerticalAlignment="Top"/>
-            <local:BindableRichTextBox BindableDocument="{Binding Description, Converter={x:Static converters:RichTextBoxConverter.Black}, Mode=OneWay}" TextAlign="Left" HorizontalAlignment="Center" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" Margin="10,30,10,35" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Width="512"/>
-        </StackPanel>
+            <local:BindableRichTextBox BindableDocument="{Binding Title, Converter={x:Static converters:RichTextBoxConverter.Default}, Mode=OneWay}" TextAlign="Center" HorizontalAlignment="Center" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" Margin="0,39,0,0" VerticalAlignment="Top" Foreground="White" FontWeight="SemiBold" FontSize="22" Background="Transparent" BorderThickness="0" Grid.Row="0"/>
 
-        <ListView Grid.Row="2" ItemsSource="{Binding Options}" MaxHeight="350">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <Image Source="{Binding Source={x:Static shared:StaticPaths.Instance}, Path=EventOptionPath, Converter={x:Static converters:DDSConverter.Default}}" HorizontalAlignment="Left" Stretch="None">
-                            <Image.ToolTip>
-                                <ToolTip MaxWidth="400" Background="#F20D0D0D">
-                                    <TreeView ItemsSource="{Binding Nodes}" Style="{StaticResource ScrollableTreeView}" />
-                                </ToolTip>
-                            </Image.ToolTip>
-                        </Image>
-                        <local:BindableRichTextBox BindableDocument="{Binding Name, Converter={x:Static converters:RichTextBoxConverter.Default}, Mode=OneWay}" TextAlign="Center" VerticalAlignment="Center" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" Background="Transparent" BorderThickness="0" Width="500"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
+            <StackPanel Background="#FFCEAE80" Margin="10, 20" Grid.Row="1">
+                <Image Source="{Binding PicturePath, Converter={x:Static converters:DDSConverter.Default}}" HorizontalAlignment="Left" Margin="10,10,0,0" Stretch="None" VerticalAlignment="Top"/>
+                <local:BindableRichTextBox BindableDocument="{Binding Description, Converter={x:Static converters:RichTextBoxConverter.Black}, Mode=OneWay}" TextAlign="Left" HorizontalAlignment="Center" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" Margin="10,30,10,35" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Width="512"/>
+            </StackPanel>
+
+            <ListView Grid.Row="2" ItemsSource="{Binding Options}" MaxHeight="350">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding Source={x:Static shared:StaticPaths.Instance}, Path=EventOptionPath, Converter={x:Static converters:DDSConverter.Default}}" HorizontalAlignment="Left" Stretch="None">
+                                <Image.ToolTip>
+                                    <ToolTip MaxWidth="400" Background="#F20D0D0D">
+                                        <TreeView ItemsSource="{Binding Nodes}" Style="{StaticResource ScrollableTreeView}" />
+                                    </ToolTip>
+                                </Image.ToolTip>
+                            </Image>
+                            <local:BindableRichTextBox BindableDocument="{Binding Name, Converter={x:Static converters:RichTextBoxConverter.Default}, Mode=OneWay}" TextAlign="Center" VerticalAlignment="Center" IsReadOnly="True" Focusable="False" IsHitTestVisible="False" Background="Transparent" BorderThickness="0" Width="500"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
 </UserControl>

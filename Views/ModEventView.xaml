@@ -20,12 +20,11 @@ FontFamily="{materialDesign:MaterialDesignFont}"
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ListView Grid.Column="0" ItemsSource="{Binding Mod.EventFiles}" MaxHeight="1000" Grid.RowSpan="3">
+        <ListView Grid.Column="0" ItemsSource="{Binding Mod.EventFiles}" MaxHeight="1000" VerticalAlignment="Top" Grid.RowSpan="4">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Button cal:Message.Attach="SelectFile($dataContext)">
@@ -40,7 +39,7 @@ FontFamily="{materialDesign:MaterialDesignFont}"
         <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding NameQuery, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Find name/id"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="40" VerticalAlignment="Top"/>
 
-        <ListView Grid.Column="1" ItemsSource="{Binding SelectedEvents}" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top" MaxHeight="1000">
+        <ListView Grid.Column="1" ItemsSource="{Binding SelectedEvents}" Grid.Row="1" VerticalAlignment="Top" MaxHeight="1000">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Button cal:Message.Attach="SelectEvent($dataContext)">
@@ -52,6 +51,16 @@ FontFamily="{materialDesign:MaterialDesignFont}"
             </ListView.ItemTemplate>
         </ListView>
 
-        <local:EventWindowView Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" DataContext="{Binding SelectedEvent}" Margin="0,25"/>
+        <Grid Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Margin="25,25" >
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <local:EventWindowView DataContext="{Binding SelectedEvent}" Grid.Row="0"/>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>
