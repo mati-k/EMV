@@ -32,6 +32,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Images\mission_bg_texture.png" />
+  </ItemGroup>
+  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
@@ -61,6 +64,9 @@
     <PackageReference Include="Pdoxcl2Sharp" Version="0.6.1" />
     <PackageReference Include="Pfim" Version="0.10.0" />
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\mission_bg_texture.png" />
   </ItemGroup>
   <ItemGroup>
     <None Update="App.config">

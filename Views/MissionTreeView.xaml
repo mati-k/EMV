@@ -12,7 +12,10 @@ TextElement.FontWeight="Medium"
 TextElement.FontSize="14"
 FontFamily="{materialDesign:MaterialDesignFont}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#FF2D373F">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/mission_bg_texture.png" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,482,687"/>
+        </Grid.Background>
         <ScrollViewer>
             <Grid x:Name="MainGrid" Margin="30,0"/>
         </ScrollViewer>
