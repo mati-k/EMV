@@ -18,6 +18,7 @@ FontFamily="{materialDesign:MaterialDesignFont}"
     <Grid>
         <ScrollViewer>
             <StackPanel>
+                <Button x:Name="SaveMissionTreeImage" Content="Save as PNG" Margin="15,0,15,0" />
                 <ListBox ItemsSource="{Binding MissionFile.Flags}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
