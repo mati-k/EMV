@@ -20,26 +20,29 @@ namespace EMV.Models
                 if (String.IsNullOrWhiteSpace(line))
                     continue;
 
+                line = line.Trim();
                 // Ignore comment line
-                if (line.Trim().StartsWith("#"))
+                if (line.StartsWith("#"))
+                {
                     continue;
+                }
 
-                if (line.StartsWith(" "))
+                if (line.IndexOf(' ') == -1)
                 {
-                    line = line.Trim();
+                    continue;
+                }
+
+                string[] split = line.Split(new char[] { ' ' }, 2);
                     
-                    string[] split = line.Split(new char[] {' '}, 2);
-                    string[] key = split[0].Split(':');
-                    string value = split[1].Substring(1, split[1].Length - 2);
-
-                    localisation.Add(new Tuple<string, string>(key[0], value));
-                }
-
-                else
+                if (split[0].Length == 0 || split[1].Length <= 2) 
                 {
-                    // language line
-                    line = line.Substring(0, line.IndexOf(':'));
+                    continue;
                 }
+
+                string[] key = split[0].Split(':');
+                string value = split[1].Substring(1, split[1].Length - 2);
+
+                localisation.Add(new Tuple<string, string>(key[0], value));
             }
 
             return localisation;
