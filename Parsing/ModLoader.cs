@@ -224,6 +224,11 @@ namespace EMV.Parsing
 
             foreach (string folder in rootFolders)
             {
+                if (!Directory.Exists(folder))
+                {
+                    continue;
+                }
+
                 folders.Add(folder);
 
                 List<string> subDirectories = Directory.GetDirectories(folder).ToList();
