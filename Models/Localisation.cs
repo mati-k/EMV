@@ -27,6 +27,11 @@ namespace EMV.Models
                     continue;
                 }
 
+                if (line.Contains("#"))
+                {
+                    line = line.Substring(0, line.IndexOf("#")).Trim();
+                }
+
                 if (line.IndexOf(' ') == -1)
                 {
                     continue;
