@@ -19,6 +19,7 @@ namespace EMV.Models
         private bool _ai = true;
         private bool _countryShield = true;
         private NodeModel _potential;
+        private NodeModel _potentialOnLoad;
 
         public string Name
         {
@@ -74,6 +75,17 @@ namespace EMV.Models
                 NotifyOfPropertyChange(() => Potential);
             }
         }
+
+        public NodeModel PotentialOnLoad
+        {
+            get { return _potentialOnLoad; }
+            set
+            {
+                _potentialOnLoad = value;
+                NotifyOfPropertyChange(() => PotentialOnLoad);
+            }
+        }
+
         public BindableCollection<MissionModel> Missions { get; set; } = new BindableCollection<MissionModel>();
         public MissionFileModel MissionFile { get; set; }
 
@@ -92,6 +104,7 @@ namespace EMV.Models
                     case "generic": Generic = parser.ReadBool(); break;
                     case "ai": AI = parser.ReadBool(); break;
                     case "potential": Potential = parser.Parse(new GroupNodeModel() { Name = "potential" }); break;
+                    case "potential_on_load": PotentialOnLoad = parser.Parse(new GroupNodeModel() { Name = "potential_on_load" }); break;
                     case "has_country_shield": CountryShield = parser.ReadBool(); break;
                     default: Missions.Add(parser.Parse(new MissionModel(this) { Name = token })); break;
                 }
