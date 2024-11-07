@@ -13,7 +13,7 @@ Background="{DynamicResource MaterialDesignPaper}"
 TextElement.FontWeight="Medium"
 TextElement.FontSize="14"
 FontFamily="{materialDesign:MaterialDesignFont}"
-        Title="EU4 Mission Tool" Height="450" Width="1200">
+        Title="EU4 Mod Viewer" Height="450" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />

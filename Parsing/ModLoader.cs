@@ -72,7 +72,7 @@ namespace EMV.Parsing
             {
                 try
                 {
-                    string fileText = LongTextBypass(file);
+                    string fileText = File.ReadAllText(file);
                     using (Stream fileStream = new MemoryStream(Encoding.UTF8.GetBytes(fileText ?? "")))
                     {
                         T fileData = ParadoxParser.Parse(fileStream, new T());
@@ -90,44 +90,6 @@ namespace EMV.Parsing
             }
 
             return data;
-        }
-        
-        // Temporary fix, parsing library has 256 character limit,
-        // but paradox allowed and used in mods is 512
-        // This solves most likely case for the for = {} effect
-        private string LongTextBypass (string file)
-        {
-            string fileText = File.ReadAllText(file);
-
-            char[] textArray = fileText.ToCharArray();
-
-            int startIndex = fileText.IndexOf("\tfor =", 0);
-            while (startIndex != -1)
-            {
-                startIndex = fileText.IndexOf("effect", startIndex);
-                bool bracketOpen = false;
-                while (startIndex < fileText.Length)
-                {
-                    if (fileText[startIndex] == '"')
-                    {
-                        if (!bracketOpen)
-                        {
-                            textArray[startIndex] = '{';
-                            bracketOpen = true;
-
-                        }
-                        else
-                        {
-                            textArray[startIndex] = '}';
-                            break;
-                        }
-                    }
-                    startIndex++;
-                }
-                startIndex = fileText.IndexOf("\tfor =", startIndex);
-            }
-
-            return new String(textArray);
         }
 
         private void LoadGfx()
